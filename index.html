@@ -1,0 +1,50 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+  google.charts.load("current", {packages:["calendar"]});
+  google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var queryString = encodeURIComponent('SELECT A, B, C');
+
+      var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1Pt6Wx21nAY-jqfZETzzLRjK2z-sRn_lqcYk3wpZRTnU/gviz/tq?sheet=Sheet1&headers=1&tq=' + queryString);
+      query.send(handleQueryResponse);
+    }
+
+    function handleQueryResponse(response) {
+      if (response.isError()) {
+        alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+        return;
+      }
+
+      var dataTable = response.getDataTable();
+	  var dataView = new google.visualization.DataView(dataTable);
+	  dataView.setColumns([0, 2, {sourceColumn: 1, type: 'string', role: 'tooltip', 'p': {'html': true}}])
+	  
+	  
+      var chart = new google.visualization.Calendar(document.getElementById('qotd'));
+	  var options = {
+		'height':800,
+		'width':1000,
+		title: "TD Quote Calendar",
+		focusTarget: 'category',
+		calendar: {
+			unusedMonthOutlineColor: {
+			stroke: 'yellow',
+			strokeOpacity: 0.8,
+			strokeWidth: 2
+			}
+		},
+		tooltip: {isHtml: true}
+	  };
+	  
+      chart.draw(dataView, options);
+	  }
+	  </script>
+
+
+<div id="qotd"></div>
+
+</body>
+</html>
