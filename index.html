@@ -25,8 +25,6 @@
 	  
       var chart = new google.visualization.Calendar(document.getElementById('qotd'));
 	  var options = {
-		'height':800,
-		'width':1000,
 		title: "TD Quote Calendar",
 		focusTarget: 'category',
 		calendar: {
@@ -36,7 +34,14 @@
 			strokeWidth: 2
 			}
 		},
-		tooltip: {isHtml: true}
+		tooltip: {
+			isHtml: true,
+			textStyle: {
+				fontName: 'veranda',
+				fontSize: 12
+				}
+			}
+		}
 	  };
 	  
       chart.draw(dataView, options);
